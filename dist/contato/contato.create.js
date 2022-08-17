@@ -1,9 +1,22 @@
 import { Contato } from "./contato.model.js";
 import { ContatoRepositoryLocalStorage } from "./contato.repository.LocalStorage.js";
 class ContatoPaginaCadastro {
-    constructor(repositorioContatos) {
+    constructor(repositorioContatos, id) {
         this.repositorioContatos = repositorioContatos;
         this.configurarElementos();
+        if (id) {
+            this.idSelecionado = id;
+            const contatoSelecionado = this.repositorioContatos.selecionarPorId(id);
+            if (contatoSelecionado)
+                this.preencherFormulario(contatoSelecionado);
+        }
+    }
+    preencherFormulario(contatoSelecionado) {
+        this.txtNome.value = contatoSelecionado.nome;
+        this.txtEmail.value = contatoSelecionado.email;
+        this.txtTelefone.value = contatoSelecionado.telefone;
+        this.txtEmpresa.value = contatoSelecionado.empresa;
+        this.txtCargo.value = contatoSelecionado.cargo;
     }
     configurarElementos() {
         this.txtNome = document.getElementById("nome");
@@ -16,10 +29,27 @@ class ContatoPaginaCadastro {
         this.btnSalvar.addEventListener("click", (_evt) => this.gravarRegistros());
     }
     gravarRegistros() {
-        const novoContato = new Contato(this.txtNome.value, this.txtEmail.value, this.txtTelefone.value, this.txtEmpresa.value, this.txtCargo.value);
-        this.repositorioContatos.inserir(novoContato);
-        // método para redirecionar usuario
-        window.location.href = "../contato/contato.html";
+        const contato = this.obterDadosFormulario();
+        if (!this.idSelecionado)
+            this.repositorioContatos.inserir(contato);
+        else
+            this.repositorioContatos.editar(contato.id, contato);
+        window.location.href = "contato.html";
+    }
+    obterDadosFormulario() {
+        const nome = this.txtNome.value;
+        const email = this.txtEmail.value;
+        const telefone = this.txtTelefone.value;
+        const empresa = this.txtEmpresa.value;
+        const cargo = this.txtCargo.value;
+        let contato = null;
+        if (!this.idSelecionado)
+            contato = new Contato(nome, email, telefone, empresa, cargo);
+        else
+            contato = new Contato(nome, email, telefone, empresa, cargo, this.idSelecionado);
+        return contato;
     }
 }
-new ContatoPaginaCadastro(new ContatoRepositoryLocalStorage());
+const pararms = new URLSearchParams(window.location.search);
+const id = pararms.get("id");
+new ContatoPaginaCadastro(new ContatoRepositoryLocalStorage(), id);

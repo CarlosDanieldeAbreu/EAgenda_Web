@@ -7,8 +7,13 @@ export class Contato extends EntidadeBase {
   public empresa: string;
   public cargo: string;
 
-  constructor(nome: string, email: string, telefone: string, empresa: string, cargo: string) {
+  constructor(nome: string, email: string, telefone: string, empresa: string, cargo: string, id?: string) {
     super();
+    
+    if (id) {
+      this.id = id;
+    }
+
     this.nome = nome;
     this.email = email;
     this.telefone = telefone;

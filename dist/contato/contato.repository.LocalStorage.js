@@ -11,10 +11,29 @@ export class ContatoRepositoryLocalStorage {
         this.contatos.push(registro);
         this.gravar();
     }
+    editar(id, registroEditado) {
+        const indexSelecionado = this.contatos.findIndex(x => x.id === id);
+        this.contatos[indexSelecionado] = {
+            id: id,
+            nome: registroEditado.nome,
+            email: registroEditado.email,
+            telefone: registroEditado.telefone,
+            empresa: registroEditado.empresa,
+            cargo: registroEditado.cargo
+        };
+        this.gravar();
+    }
+    excluir(id) {
+        this.contatos = this.contatos.filter(x => x.id !== id);
+        this.gravar();
+    }
     selecionarTodos() {
         const dados = this.localStorage.getItem("contatos");
         if (!dados)
             return [];
         return JSON.parse(dados);
+    }
+    selecionarPorId(id) {
+        return this.contatos.find(x => x.id === id);
     }
 }

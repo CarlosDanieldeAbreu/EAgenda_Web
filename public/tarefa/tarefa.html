@@ -51,18 +51,12 @@
       <div class="row mb-2">
         <div class="input-group col">
           <label class="input-group-text" for="inputGroupSelectCategoria">Categoria</label>
-          <select class="form-select" id="inputGroupSelectCategoria">
+          <select class="form-select text-center" id="inputGroupSelectCategoria">
             <option selected value="Baixa">Baixa</option>
             <option value="Normal">Normal</option>
             <option value="Alta">Alta</option>
           </select>
         </div>
-
-        <div class="input-group col order-1">
-          <label class="input-group-text" for="dataCriacao">Data</label>
-          <input type="date" id="dataCriacao" class="form-control">
-        </div>
-
         <!--<div class="input-group col order-2">
           <label class="input-group-text" for="dataConclusao">Data de conclusão</label>
           <input type="date" id="dataConclusao" class="form-control">
@@ -78,7 +72,7 @@
         <button class="btn btn-primary" id="btnSalvar" type="button">Salvar</button>
       </div>
     </form>
-    <section id="tabela">
+    <section id="listagem">
       <div class="card border-secondary mt-4 p-2">
         <div class="card-body">
           <table id="tabela" class="table table-light table-hover text-center">
@@ -87,9 +81,9 @@
                 <th>Id</th>
                 <th>Título</th>
                 <th>Data de criação</th>
-                <th>Data de conclusão</th>
                 <th>Prioridade</th>
-                <th>Percentual concluido</th>
+                <!--<th>Data de conclusão</th>-->
+                <!--<th>Percentual concluido</th>-->
               </tr>
             </thead>
             <tbody class="table-group-divider"></tbody>
